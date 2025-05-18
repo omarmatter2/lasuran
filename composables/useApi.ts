@@ -12,18 +12,28 @@ export const useApi = (
   const baseUrl = config.public.apiBaseUrl ?? "https://lasuran-dev.jigsawme.io/api/v1/"
   const url = `https://lasuran-dev.jigsawme.io/api/v1/${endpoint}`;
 
+  const toast = useToast()
+
+
  const headers: RequestHeaders = getRequestHeaders(options.headers);
 //   if (callbacks.transformData) options.transform = callbacks.transformData;
 
   const requestOptions :RequestOptions = {
     headers,
     onResponse(response : any)  {
-      if (callbacks.onSuccess instanceof Function) callbacks.onSuccess(response?.response?._data);
+        let data = response?.response?._data;
+      if (callbacks.onSuccess instanceof Function && data?.status) callbacks.onSuccess(data);
+      // else if(!data?.status) {
+      //     toast.add({title : data?.message, color:'error'});
+      // }
       return response;
     },
     onResponseError (error : any)  {
-      if (callbacks.onError instanceof Function) callbacks.onError(error);
-      return error;
+        if (error?.response?._data?.message)
+            toast.add({title : error?.response?._data?.message, color:'error' });
+
+        if (callbacks.onError instanceof Function) callbacks.onError(error);
+        return error;
     },
     ...options,
   };

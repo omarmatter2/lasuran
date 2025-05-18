@@ -6,11 +6,13 @@ import components from "~/components/import";
 export const useAuth = defineStore("auth", {
     state: (): AuthState => {
         return {
+            loading: false,
             user: {},
             token: '',
             step: COMPONENTS.SEND_OTP_STEP,
             mobile_number: '',
-            mobile_code: "966"
+            mobile_code: "966",
+            otp: null
         }
     },
     getters: {
@@ -25,51 +27,100 @@ export const useAuth = defineStore("auth", {
         },
         getStepComponent(state: AuthState) {
             return components[state.step];
+        },
+        getUserName(state: AuthState) {
+            return `${this.getUser?.first_name} ${this.getUser?.last_name}` ?? '-'
+        },
+        getMobileNumber(state: AuthState) {
+            return`+${this.getUser?.mobile_number}` ?? '-'
+        },
+        getFullOtpMobileNumber(state: AuthState) {
+            return `+${state.mobile_code} ${state.mobile_number}`;
         }
     },
     actions: {
         sendOtp(payload: any) {
-            payload.mobile_number = `${payload.mobile_code}${payload.mobile_number}`;
+            // payload.mobile_number = `${payload.mobile_code}${payload.mobile_number}`;
             this.$state.mobile_number = payload.mobile_number;
             this.$state.mobile_code = payload.mobile_code;
-            const response = useApi("account/send-otp", {
+            this.$state.loading = true;
+            return useApi("account/send-otp", {
                 method: "POST",
-                body: payload,
-            }).then((response) => {
-                this.setStepComponent(COMPONENTS.VERIFY_OTP_STEP);
-            });
-            return response;
+                body: {
+                    mobile_number: `${payload.mobile_code}${payload.mobile_number}`,
+                    mobile_code: payload.mobile_code
+                }},
+                {
+                    onSuccess:(data) => {
+                        if (data.status) {
+                            this.setStepComponent(COMPONENTS.VERIFY_OTP_STEP);
+                        }
+                        this.$state.loading = false;
+                    },
+                    onError: (err) => {
+                        this.$state.loading = false;
+                    }
+                });
         },
-        verifyOtp(payload: {}) {
-            payload.otp = (payload.otp ?? []).join('');
-            const response = useApi("account/verify-otp", {
+        verifyOtp(payload: {otp : null}) {
+            const { setDialogShow } = useApp();
+            this.$state.loading = true;
+            this.$state.otp = (payload.otp ?? []).join('');
+            return useApi("account/verify-otp", {
                 method: "POST",
-                body: payload,
+                body: {
+                    mobile_number: `${this.$state.mobile_code}${this.$state.mobile_number}`,
+                    mobile_code: this.$state.mobile_code,
+                    otp : this.$state.otp,
+                },
             },{
                 onSuccess: (data : any) => {
-                    this.setStepComponent(COMPONENTS.COMPLETE_PROFILE_STEP);
-                    this.setAuth({
-                        user : data.data,
-                        token: data.data.token,
-                    })
-                    console.log("verifyOtp",data)
+                    this.$state.loading = false;
+                    let response = data.data;
+                    console.log('verifyOtp',response);
+                    if (response.is_completed) {
+                        // this.setStepComponent(COMPONENTS.SEND_OTP_STEP);
+                        this.setAuth({
+                            user : response,
+                            token: response.token,
+                        });
+                        setDialogShow(false);
+                    } else {
+                        this.setStepComponent(COMPONENTS.COMPLETE_PROFILE_STEP);
+                    }
+                },
+                onError: (err) => {
+                    this.$state.loading = false;
                 }
             });
-
-            return response;
         },
         register(payload: {}) {
-            //  this.setAuth({
-            //             user :  { "id": 1, "name": "sameh" },
-            //             token : "this is token from api"
-            //         })
-
+            const { setDialogShow } = useApp();
+            this.$state.loading = true;
+            payload.otp = this.$state.otp;
+            payload.mobile_number = `${this.$state.mobile_code}${this.$state.mobile_number}`;
+            payload.mobile_code = this.$state.mobile_code;
+            this.$state.otp = payload.otp;
+            return useApi("user/register", {
+                method: "POST",
+                body: payload
+            },{
+                onSuccess: (data : any) => {
+                    this.$state.loading = false;
+                    let response = data.data;
+                    this.setAuth({
+                        user : response,
+                        token: response.token,
+                    });
+                    setDialogShow(false);
+                },
+                onError: (err) => {
+                    this.$state.loading = false;
+                }
+            });
         },
         logout() {
-            alert('verifyOtp')
-            setTimeout(() => {
-                this.forgetAuth()
-            }, 2000)
+            this.forgetAuth()
         },
         setAuth(payload: { user: {}, token: string }) {
             this.$state.user = payload.user;
@@ -79,9 +130,11 @@ export const useAuth = defineStore("auth", {
             this.$state.token = '';
             this.$state.user = {};
         },
-        setStepComponent(state: AuthState) {
-            this.$state.step = state;
+        setStepComponent(step: any) {
+            this.$state.step = step;
         }
     },
-    persist: true,
+    persist: {
+        storage: localStorage,
+    },
 })

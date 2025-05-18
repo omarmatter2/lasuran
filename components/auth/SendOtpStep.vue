@@ -20,7 +20,7 @@
 
     <div class="flex items-center gap-[10px] mt-[20px]">
       <label class="relative flex items-center cursor-pointer select-none">
-        <input type="checkbox" class="sr-only peer" />
+        <input type="checkbox" class="sr-only peer" value="1" v-model="form.accept_terms" />
 
         <!-- دائرة خارجية -->
         <div
@@ -40,10 +40,11 @@
       </span>
     </div>
     <div class="w-full space-y-3">
-      <UButton label="Continue" @click="sendOtp"
+
+      <BaseButton :loading="authModule.loading" label="Continue" @click="onContinueClick"
         class="bg-[#A0576F] text-white rounded-[100px] w-full py-[16px] justify-center text-[18px] font-normal leading-[100%] tracking-[0] border border-[#A0576F] hover:bg-[#913E5D] transition cursor-pointer mt-[30px]" />
 
-      <UButton label="Continue as a Guest" @click="continueAsGuest"
+      <BaseButton label="Continue as a Guest" @click="continueAsGuest"
         class="bg-transparent text-[#A0576F] border border-[#A0576F] rounded-[100px] w-full py-[16px] justify-center text-[18px] font-normal hover:bg-[#F4EAEA] transition cursor-pointer leading-[100%] tracking-[0]" />
     </div>
   </div>
@@ -52,20 +53,29 @@
 <script setup lang="ts">
 import { COMPONENTS } from "~/data/constants";
 import { nextTick } from "vue";
-const { setStepComponent, sendOtp: sendOtpApi } = useAuth();
+const authModule = useAuth();
 const { setDialogShow } = useApp();
 const form = ref({
   mobile_number: '',
-  mobile_code: "966"
+  mobile_code: "966",
+  accept_terms: 0
 });
 
 const continueAsGuest = function () {
-  setStepComponent(COMPONENTS.INTRO_STEP);
+  authModule.setStepComponent(COMPONENTS.INTRO_STEP);
   nextTick(() => setDialogShow(false));
 }
+const toast = useToast();
+const onContinueClick = function () {
+  if (!form.value.mobile_number) {
+    toast.add({ title:"Please Enter Valid Mobile Number!", color: 'error' });
+    return;
+  }
 
-const sendOtp = function () {
-  sendOtpApi(form.value);
-  // setStepComponent(COMPONENTS.VERIFY_OTP_STEP);
+  if (!form.value.accept_terms) {
+    toast.add({ title:"You must accept the Terms and Conditions before you can proceed.", color: 'error' });
+    return;
+  }
+  authModule.sendOtp(form.value);
 }
 </script>
