@@ -1,7 +1,7 @@
 <template>
   <Container>
     <ServiceFilters v-model="filters" />
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-6" v-if="!menuModule?.isServicesLoading">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-[30px]" v-if="!menuModule?.isServicesLoading">
       <BaseCard v-for="service in menuModule.getServices" :key="service.id">
         <template #default>
           <div @click="openModal(service)"
@@ -231,7 +231,11 @@ const filters = ref({
 
 </script>
 
-<style>
+<style scoped>
+
+
+
+/* 
 .main-category>.bg-primary,
 .sub-category>.bg-primary {
   background-color: transparent !important;
@@ -324,5 +328,5 @@ const filters = ref({
 .time-group label:has(*[data-state="checked"]) p {
   color: white;
   font-weight: bold;
-}
+} */
 </style>
