@@ -1,0 +1,69 @@
+@import "tailwindcss";
+@import "@nuxt/ui";
+
+*{
+  font-family: 'Klein', sans-serif;
+}
+
+[dir="rtl"] *{
+  font-family: 'Tajawal', sans-serif;
+}
+
+  
+  .bg-decore {
+    position: relative;
+    overflow: hidden;
+  }
+  .bg-decore::before {
+    content: url('/public/assets/img/start-bg.svg');
+    position: absolute;
+    inset-inline-start: 0;
+    top: 0;
+    bottom: 0;
+    opacity: .4;
+  }
+
+  .bg-decore::after {
+    content: url('/public/assets/img/end-bg.svg');
+    position: absolute;
+    inset-inline-end: 0;
+    top: 0;
+    bottom: 0;
+    opacity: .4;
+  }
+
+  .bg-decore-modal {
+    position: relative;
+    overflow: hidden;
+  }
+    .bg-decore-modal::before {
+    content: url('/public/assets/img/start-bg-modal.svg');
+    position: absolute;
+    inset-inline-start: 0;
+    top: 0;
+    bottom: 0;
+    opacity: .1;
+  }
+
+.calendar-header button {
+  color: white !important;
+}
+
+.calendar-header button:hover {
+  color: #A0576F !important;
+}
+
+
+
+
+::-webkit-scrollbar {
+  /* height: 6px; */
+  width: 4px;
+}
+::-webkit-scrollbar-track {
+  background: #EBE4DF;
+}
+::-webkit-scrollbar-thumb {
+  background-color: #A0576F;
+  border-radius: 8px;
+}
