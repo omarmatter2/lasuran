@@ -20,11 +20,11 @@
         {{ defaultService.description }}
       </p>
 
-      <div class="flex justify-between gap-4">
-<!--        <div>-->
-<!--          <p class="font-medium text-[17px] text-[#A0576F] mb-[11px]">Extensions Amount</p>-->
-<!--          <CustomRadio v-model="selectedExtension" :items="selectedService.extensionOptions" />-->
-<!--        </div>-->
+      <!-- <div class="flex justify-between gap-4">
+        <div>
+          <p class="font-medium text-[17px] text-[#A0576F] mb-[11px]">Extensions Amount</p>
+         <CustomRadio v-model="selectedExtension" :items="selectedService.extensionOptions" />
+       </div>
 
         <div>
           <p class="font-medium text-[17px] text-[#A0576F] mb-[25px]">Guests</p>
@@ -37,9 +37,9 @@
             <span>Add Guest</span>
           </button>
         </div>
-      </div>
+      </div> -->
 
-      <BaseButton @click="addToCart" :loading="cartModule.isAddLoading">
+      <BaseButton @click="addToCart" :loading="cartModule.isAddLoading" class="bg-[#A0576F] text-[#EBE4DF] rounded-[100px] w-full py-[16px] justify-center text-[20px] font-normal leading-[100%] tracking-[0] border border-[#A0576F] hover:bg-[#913E5D] transition cursor-pointer mt-[30px]  disabled:bg-[#A0576F]">
         <span>{{ selectedExtension === '' ? '' : selectedService.price + ' SAR - ' }}Continue</span>
       </BaseButton>
 <!--      <button-->

@@ -16,23 +16,23 @@
 
                 <h2 class="text-center text-[23px] font-bold leading-normal text-[#A0576F] mb-[40px]">Book Services</h2>
 
-                <label class="flex items-center gap-[12px] text-[16px] font-normal leading-normal text-[#6B8B9B]">
+                <!-- <label class="flex items-center gap-[12px] text-[16px] font-normal leading-normal text-[#6B8B9B]">
                   <input type="radio" class="hidden" name="reservation" value="someone-else" v-model="reserveOption" />
                   <span class="w-[20px] h-[20px] rounded-full border border-[#A0576F] flex items-center justify-center">
                     <span v-if="reserveOption === 'someone-else'"
                       class="w-[10px] h-[10px] bg-[#A0576F] rounded-full"></span>
                   </span>
                   Reserve for someone else
-                </label>
+                </label> -->
 
-                <div class="mb-[17px]">
+                <!-- <div class="mb-[17px]">
                   <h3 class="text-[21px] font-medium leading-normal text-[#A0576F] mt-[40px] mb-[14px]">Deep Facial Cleanse
                   </h3>
 
                   <USelect v-model="selectedProfessional" :items="professionals" placeholder="Select professional"
                     class="rounded-[100px] border border-[#A0576F] bg-[#EBE4DF] text-[14px] font-normal leading-normal text-[#90928F] w-full"
                     size="lg" />
-                </div>
+                </div> -->
 
                 <div class="mb-[12px]">
                   <h3 class="text-[17px] font-normal leading-normal text-[#A0576F] mb-[12px]">Select Date</h3>
@@ -47,7 +47,7 @@
                       root: 'relative block time-group',
                       fieldset: 'flex justify-between',
                       legend: 'mb-1 block font-medium text-default',
-                      item: 'flex items-start bg-[#E6CDC7A3] rounded-[52px] border-0 flex justify-center items-center px-[19px] py-[14px] text-center text-[15px] font-normal leading-normal has-data-[state=checked]:bg-[#A0576F]',
+                      item: 'flex items-start bg-[#E6CDC7A3] rounded-[52px] border-0 flex justify-center items-center px-[19px] py-[14px] text-center text-[15px] font-normal leading-normal has-data-[state=checked]:bg-[#A0576F] has-data-[state=checked]:text-[#EBE4DF]',
                       container: 'flex items-center',
                       base: 'rounded-full ring ring-inset ring-accented overflow-hidden focus-visible:outline-2 focus-visible:outline-offset-2',
                       indicator: 'flex items-center justify-center size-full after:bg-default after:rounded-full',
@@ -120,8 +120,10 @@ const onBack = function(){
 
 </script>
 
-<style scoped>
+<style>
 
-
+  .time-group label:has([data-state="checked"]) p{
+    color: #EBE4DF;
+  }
 
 </style>

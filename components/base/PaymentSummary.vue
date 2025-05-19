@@ -24,23 +24,32 @@
     <div class="space-y-4 mt-4">
 
       <div class="flex gap-2 relative border border-[#A0576F] rounded-[100px] overflow-hidden">
-        <UInput placeholder="Enter Promo Code" class="flex-1 bg-transparent text-[15px] font-normal leading-normal capitalize ps-[24px] h-[44px] summary-input" />
-        <UButton class="h-full bg-transparent text-[#A0576F] text-[15px] font-normal leading-normal underline p-0 pe-[24px] h-[44px]" color="primary" variant="soft">Apply</UButton>
+        <UInput placeholder="Enter Promo Code"
+          class="flex-1 bg-transparent text-[15px] font-normal leading-normal capitalize ps-[24px] h-[44px] summary-input" />
+        <UButton
+          class="h-full bg-transparent text-[#A0576F] text-[15px] font-normal leading-normal underline p-0 pe-[24px] h-[44px]"
+          color="primary" variant="soft">Apply</UButton>
       </div>
       <div class="flex gap-[15px]">
         <div class="flex gap-2 relative border border-[#A0576F] rounded-[100px] overflow-hidden">
-          <UInput placeholder="Gift Card SN" class="flex-1 bg-transparent text-[15px] font-normal leading-normal capitalize ps-[24px] h-[44px] summary-input" />
-          <UButton class="h-full bg-transparent text-[#A0576F] text-[15px] font-normal leading-normal underline p-0 pe-[24px] h-[44px]" color="primary" variant="soft">Apply</UButton>
+          <UInput placeholder="Gift Card SN"
+            class="flex-1 bg-transparent text-[15px] font-normal leading-normal capitalize ps-[24px] h-[44px] summary-input" />
+          <UButton
+            class="h-full bg-transparent text-[#A0576F] text-[15px] font-normal leading-normal underline p-0 pe-[24px] h-[44px]"
+            color="primary" variant="soft">Apply</UButton>
         </div>
-            <a href="#" class="flex items-center justify-center px-[18px] w-[45%] text-[#6B8B9B] bg-[#BBCACF] text-center text-[14px] font-normal leading-normal rounded-[100px] h-[44px]">All Cards</a>
-    </div>
+        <a href="#"
+          class="flex items-center justify-center px-[18px] w-[45%] text-[#6B8B9B] bg-[#BBCACF] text-center text-[14px] font-normal leading-normal rounded-[100px] h-[44px]">All
+          Cards</a>
+      </div>
       <div class="flex items-center gap-2 text-sm text-[#A0576F]">
         <UCheckbox v-model="accepted" />
         <span>Accept terms and conditions</span>
       </div>
-      <UButton class="w-full bg-[#A0576F] text-white rounded-full py-3">
+      <UButton class="cart-btn flex align-center gap-[24px] w-full text-white py-3 rounded-full font-[600] text-[16px] justify-center bg-[#A0576F] hover:bg-[#913E5D] mt-[35px]  disabled:bg-[#A0576F]">
         {{ (subtotal + vat).toFixed(2) }} SAR - Checkout
       </UButton>
+
     </div>
   </div>
 </template>
@@ -59,13 +68,13 @@ const accepted = ref(false)
 .summary-input input {
   background-color: transparent !important;
   border: 0;
-    box-shadow: unset;
-    padding: 0;
-    height: 100%;
-    font-size: 15px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: normal;
-    text-transform: capitalize;  
+  box-shadow: unset;
+  padding: 0;
+  height: 100%;
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  text-transform: capitalize;
 }
 </style>
