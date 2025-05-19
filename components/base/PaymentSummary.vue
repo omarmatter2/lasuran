@@ -27,7 +27,7 @@
         <UInput placeholder="Enter Promo Code"
           class="flex-1 bg-transparent text-[15px] font-normal leading-normal capitalize ps-[24px] h-[44px] summary-input" />
         <UButton
-          class="h-full bg-transparent text-[#A0576F] text-[15px] font-normal leading-normal underline p-0 pe-[24px] h-[44px]"
+          class="h-full bg-transparent text-[#A0576F] text-[15px] font-normal leading-normal underline p-0 pe-[24px] h-[44px] hover:bg-transparent"
           color="primary" variant="soft">Apply</UButton>
       </div>
       <div class="flex gap-[15px]">
@@ -35,7 +35,7 @@
           <UInput placeholder="Gift Card SN"
             class="flex-1 bg-transparent text-[15px] font-normal leading-normal capitalize ps-[24px] h-[44px] summary-input" />
           <UButton
-            class="h-full bg-transparent text-[#A0576F] text-[15px] font-normal leading-normal underline p-0 pe-[24px] h-[44px]"
+            class="h-full bg-transparent text-[#A0576F] text-[15px] font-normal leading-normal underline p-0 pe-[24px] h-[44px] hover:bg-transparent"
             color="primary" variant="soft">Apply</UButton>
         </div>
         <a href="#"
